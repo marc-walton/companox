@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "252155978188",
+    "project_id": "companox",
+    "storage_bucket": "companox.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252155978188:android:9dfa0a4e382029a8c53d69",
+        "android_client_info": {
+          "package_name": "com.example.companox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252155978188-b1l8u06nrhcna37j0gptfs8d2s92fhtk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.companox",
+            "certificate_hash": "f44d18b0631ef586b11385e6cffb5b45a17d64a7"
+          }
+        },
+        {
+          "client_id": "252155978188-vhs6kavh7r3lckvoe0eom7dlmqoan4mi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.companox",
+            "certificate_hash": "5200d0a257f115432e9441893c6d3de6d2e4569f"
+          }
+        },
+        {
+          "client_id": "252155978188-mlfl0c7pg0gm71v2dq70lj753bdvvnt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe3CqprdqkeILu9WLlI7ZRQdLu5FUVna4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252155978188-mlfl0c7pg0gm71v2dq70lj753bdvvnt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
