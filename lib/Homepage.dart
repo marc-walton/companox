@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:companox/Models/Questions.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:companox/Authenticate/register.dart';
 import 'package:companox/Authenticate/login.dart';
@@ -210,7 +211,18 @@ class _HomepageState extends State<Homepage> with WidgetsBindingObserver {
     FirebaseAuth.instance.signOut();
     googleSignIn.signOut();
   }
-
+//       Container(
+// child:ElevatedButton(child: Text("Logout"),onPressed: (){
+//   logout();
+//   Navigator.pushAndRemoveUntil(
+//       context,
+//       MaterialPageRoute(
+//           builder: (context) => Homepage(
+//             auth: false,
+//           )),
+//           (_) => false );
+  // Navigator.pushAndRemoveUntil(context, newRoute, (route) => false)
+// },),
   onPageChanged(int pageIndex) {
     setState(() {
       this.pageIndex = pageIndex;
@@ -228,91 +240,70 @@ class _HomepageState extends State<Homepage> with WidgetsBindingObserver {
 
   buildAuthScreen() {
 
-    return Scaffold(
-      key: _scaffoldKey,
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+drawer: Drawer(),
+        body:
+         currentUser.answered?Container() :Container(child: Questions())
 
-      body: Container(
-child:ElevatedButton(child: Text("Logout"),onPressed: (){
-  logout();
-  Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-          builder: (context) => Homepage(
-            auth: false,
-          )),
-          (_) => false );
-  // Navigator.pushAndRemoveUntil(context, newRoute, (route) => false)
-},),
-        // child: PageView(
-        //   children: <Widget>[
+        // bottomNavigationBar:
+        // BottomBar(
+        //   backgroundColor: Colors.black,
+        //   selectedIndex: pageIndex,
+        //   onTap: (int index) {
+        //     pageController.jumpToPage(index);
+        //     setState(() => pageIndex = index);
+        //   },
+        //   items: <BottomBarItem>[
+        //     BottomBarItem(
+        //       icon: Icon(Icons.weekend),
+        //       title: Text('Home',style: TextStyle(color: Colors.white),),
+        //       activeColor: Colors.white,
+        //       inactiveColor: Colors.grey,
         //
-        //     Timeline(currentUser: currentUser,userid:widget.userid,photo:widget.photo),
-        //     Shop(currentUser: currentUser),
-        //     Designer(),
-        //     LiveTv(),
-        //     ActivityFeed(),
+        //     ),
+        //     BottomBarItem(
+        //       icon:    Icon(Icons.store,),
+        //
+        //       title: Text('Shop',style: TextStyle(color: Colors.white),),
+        //       activeColor: Colors.white,
+        //       inactiveColor: Colors.grey,
+        //     ), BottomBarItem(
+        //       icon: Icon(FontAwesomeIcons.swatchbook),
+        //       title: Text('Freelancers',style: TextStyle(color: Colors.white),),
+        //       activeColor: Colors.white,
+        //       inactiveColor: Colors.grey,
+        //     ),
+        //     BottomBarItem(
+        //       icon:Icon(Icons.play_arrow),
+        //       title: Text('FashureTV',style: TextStyle(color: Colors.white),),
+        //       activeColor: Colors.white,
+        //       inactiveColor: Colors.grey,
+        //     ),
+        //     BottomBarItem(
+        //       icon:      FittedBox(
+        //         child: Row(
+        //           children: [
+        //
+        //             currentUser == null?  Container(
+        //
+        //             ):badgescount(),
+        //             Icon(Icons.inbox,),
+        //           ],
+        //         ),
+        //       ),
+        //
+        //       title: Text('Settings',style: TextStyle(color: Colors.white),),
+        //       activeColor: Colors.white,
+        //       inactiveColor: Colors.grey,
+        //
+        //     ),
         //   ],
-        //   controller: pageController,
-        //   onPageChanged: onPageChanged,
-        //   physics: NeverScrollableScrollPhysics(),
         // ),
+
+
       ),
-      // bottomNavigationBar:
-      // BottomBar(
-      //   backgroundColor: Colors.black,
-      //   selectedIndex: pageIndex,
-      //   onTap: (int index) {
-      //     pageController.jumpToPage(index);
-      //     setState(() => pageIndex = index);
-      //   },
-      //   items: <BottomBarItem>[
-      //     BottomBarItem(
-      //       icon: Icon(Icons.weekend),
-      //       title: Text('Home',style: TextStyle(color: Colors.white),),
-      //       activeColor: Colors.white,
-      //       inactiveColor: Colors.grey,
-      //
-      //     ),
-      //     BottomBarItem(
-      //       icon:    Icon(Icons.store,),
-      //
-      //       title: Text('Shop',style: TextStyle(color: Colors.white),),
-      //       activeColor: Colors.white,
-      //       inactiveColor: Colors.grey,
-      //     ), BottomBarItem(
-      //       icon: Icon(FontAwesomeIcons.swatchbook),
-      //       title: Text('Freelancers',style: TextStyle(color: Colors.white),),
-      //       activeColor: Colors.white,
-      //       inactiveColor: Colors.grey,
-      //     ),
-      //     BottomBarItem(
-      //       icon:Icon(Icons.play_arrow),
-      //       title: Text('FashureTV',style: TextStyle(color: Colors.white),),
-      //       activeColor: Colors.white,
-      //       inactiveColor: Colors.grey,
-      //     ),
-      //     BottomBarItem(
-      //       icon:      FittedBox(
-      //         child: Row(
-      //           children: [
-      //
-      //             currentUser == null?  Container(
-      //
-      //             ):badgescount(),
-      //             Icon(Icons.inbox,),
-      //           ],
-      //         ),
-      //       ),
-      //
-      //       title: Text('Settings',style: TextStyle(color: Colors.white),),
-      //       activeColor: Colors.white,
-      //       inactiveColor: Colors.grey,
-      //
-      //     ),
-      //   ],
-      // ),
-
-
     );
 //    return RaisedButton(
 //      child: Text('Log out'),

@@ -83,10 +83,10 @@ class _RegisterPageState extends State<RegisterPage> {
         "photoUrl": user.photoURL,
         "email": user.email,
         "displayName": user.displayName,
-        "next": 1,
+        "next": 0,
         "answered":false,
         "Q28-32":false,
-        "1":10,
+        "age":0,
         "2":10,
         "3":10,
         "4":10,
@@ -130,6 +130,8 @@ class _RegisterPageState extends State<RegisterPage> {
         "42":10,
         "43":10,
         "44":10,
+        "totalPoints":0,
+
       });
       doc = await usersRef.doc(user.uid).get();
     }
@@ -296,10 +298,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                       "photoUrl": "https://firebasestorage.googleapis.com/v0/b/companox.appspot.com/o/favicon-32x32.png?alt=media&token=ef959703-6079-4216-b28c-37403d1d6fc7",
                                       "email": emailInputController.text,
                                       "displayName": firstNameInputController.text,
-                                      "next": 1,
+                                      "next": 0,
                                       "answered":false,
                                       "Q28-32":false,
-                                      "1":10,
+                                      "age":0,
                                       "2":10,
                                       "3":10,
                                       "4":10,
@@ -343,6 +345,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       "42":10,
                                       "43":10,
                                       "44":10,
+                                      "totalPoints":0,
 
                                     });
                                

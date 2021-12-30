@@ -97,8 +97,8 @@ loging = true;
       "email": user.email,
       "displayName": user.displayName,
         "answered":false,
-        "next": 1,
-        "1":10,
+        "next": 0,
+        "age":0,
         "2":10,
         "3":10,
         "4":10,
@@ -143,6 +143,7 @@ loging = true;
         "43":10,
         "44":10,
         "Q28-32":false,
+        "totalPoints":0,
 
       });
 

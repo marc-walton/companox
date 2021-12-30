@@ -8,7 +8,7 @@ class Users{
 bool Ques28;
   bool answered;
   int next;
-  int  Q1;
+  int  age;
    int  Q2;
    int  Q3;
    int  Q4;
@@ -52,6 +52,7 @@ bool Ques28;
     int  Q42;
     int  Q43;
     int  Q44;
+ int  totalPoints;
 
   Users({
     this.id,
@@ -62,7 +63,7 @@ bool Ques28;
   this.next,
     this.Ques28,
 
- this.Q1,
+ this.age,
  this.Q2,
  this.Q3,
  this.Q4,
@@ -106,6 +107,7 @@ this.Q41,
 this.Q42,
 this.Q43,
 this.Q44,
+this.totalPoints,
 
 
   });
@@ -119,8 +121,9 @@ this.Q44,
       answered: doc.data()['answered'],
  next: doc.data()['next'],
       Ques28: doc.data()['Q28'],
+      totalPoints: doc.data()['totalPoints'],
 
-   Q1: doc.data()['1'],
+   age: doc.data()['age'],
 Q2: doc.data()['2'],
 Q3: doc.data()['3'],
 Q4: doc.data()['4'],
