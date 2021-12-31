@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:companox/Homepage.dart';
 import 'package:companox/Models/user.dart';
 
@@ -34,24 +35,11 @@ class _FaShowState extends State<FaShow> {
 
 
 
-    // Detects when user signed in
-    // googleSignIn.onCurrentUserChanged.listen((account) {
-    //   handleSignIn(account);
-    // }, onError: (err) {
-    //   print('Error signing in: $err');
-    // });
-    // // Reauthenticate user when app is opened
-    // googleSignIn.signInSilently(suppressErrors: false).then((account) {
-    //   handleSignIn(account);
-    // }).catchError((err) {
-    //   print('Error signing in: $err');
-    // });
-    //
-    // WidgetsBinding.instance.addObserver(this);
   }
 
   auth() async {
 
+    DocumentSnapshot doc;
     FirebaseAuth.instance
         .userChanges()
         .listen((users) async => {
@@ -67,10 +55,12 @@ class _FaShowState extends State<FaShow> {
           user= users.uid,
           photo= users.photoURL,
 
-          setState(() {
+          setState(() async {
             isAuth = true;
 
           }),
+           doc = await usersRef.doc(users.uid).get(),
+          currentUser = Users.fromDocument(doc),
         }
     });
   }

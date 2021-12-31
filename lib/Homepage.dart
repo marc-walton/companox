@@ -69,128 +69,14 @@ class _HomepageState extends State<Homepage> with WidgetsBindingObserver {
     super.initState();
 
     pageController = PageController();
-    loginuser();
 
-    // Detects when user signed in
-    // googleSignIn.onCurrentUserChanged.listen((account) {
-    //   handleSignIn(account);
-    // }, onError: (err) {
-    //   print('Error signing in: $err');
-    // });
-    // // Reauthenticate user when app is opened
-    // googleSignIn.signInSilently(suppressErrors: false).then((account) {
-    //   handleSignIn(account);
-    // }).catchError((err) {
-    //   print('Error signing in: $err');
-    // });
-    //
   }
   @override
 
-  @override
-
-  logO() async {
-    // await googleSignIn.signOut();
-    await FirebaseAuth.instance.signOut();
-    // Get.offAll(Homepage());
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Homepage(
-              auth: false,
-            )),
-            (_) => false );
-    Fluttertoast.showToast(
-        msg: "You have been banned. Contact us at fashure.business@gmail.com ", timeInSecForIos: 4);
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
-  }
-
-  loginuser()async{
-    DocumentSnapshot doc = await usersRef.doc(widget.userid).get();
-    currentUser = Users.fromDocument(doc);
-  
-      // myPrefs = await SharedPreferences.getInstance();
-      // await myPrefs.setString('id', currentUser.id);
-      // await myPrefs.setString('displayName', currentUser.displayName);
-      // await myPrefs.setString('photoUrl', currentUser.photoUrl);
-      // myPrefs = await SharedPreferences.getInstance();
-      // idd = myPrefs.getString('id') ?? '';
-      // print(',jbkbhn$idd');
-      if (Platform.isIOS) getiOSPermission();
-
-      _firebaseMessaging.getToken().then((token) {
-        print("Firebase Messaging Token: $token\n");
-        usersRef
-            .doc(widget.userid)
-            .update({"androidNotificationToken": token});
-      });
-
-      _firebaseMessaging.configure(
-        // onLaunch: (Map<String, dynamic> message) async {},
-        // onResume: (Map<String, dynamic> message) async {},
-        onMessage: (Map<String, dynamic> message) async {
-          // print("on message: $message\n");
-          final String recipientId = message['data']['recipient'];
-          final String body = message['notification']['body'];
-          if (recipientId == widget.userid) {
-            // print("Notification shown!");
-            SnackBar snackBar = SnackBar(
-                content: Text(
-                  body,
-                  overflow: TextOverflow.ellipsis,
-                ));
-            _scaffoldKey.currentState.showSnackBar(snackBar);
-          }
-          // print("Notification NOT shown");
-        },
-      );
-      WidgetsBinding.instance.addObserver(this);
 
 
-    }
  
 
-
-
-  configurePushNotifications() {
-    final GoogleSignInAccount user = googleSignIn.currentUser;
-    if (Platform.isIOS) getiOSPermission();
-
-    _firebaseMessaging.getToken().then((token) {
-      print("Firebase Messaging Token: $token\n");
-      usersRef
-          .doc(user.id)
-          .update({"androidNotificationToken": token});
-    });
-
-    _firebaseMessaging.configure(
-      // onLaunch: (Map<String, dynamic> message) async {},
-      // onResume: (Map<String, dynamic> message) async {},
-      onMessage: (Map<String, dynamic> message) async {
-        // print("on message: $message\n");
-        final String recipientId = message['data']['recipient'];
-        final String body = message['notification']['body'];
-        if (recipientId == user.id) {
-          // print("Notification shown!");
-          SnackBar snackBar = SnackBar(
-              content: Text(
-                body,
-                overflow: TextOverflow.ellipsis,
-              ));
-          _scaffoldKey.currentState.showSnackBar(snackBar);
-        }
-        // print("Notification NOT shown");
-      },
-    );
-  }
-
-  getiOSPermission() {
-    _firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(alert: true, badge: true, sound: true));
-    _firebaseMessaging.onIosSettingsRegistered.listen((settings) {
-      // print("Settings registered: $settings");
-    });
-  }
 
 
   @override

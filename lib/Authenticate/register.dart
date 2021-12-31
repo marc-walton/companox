@@ -348,7 +348,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       "totalPoints":0,
 
                                     });
-                               
+                                    DocumentSnapshot doc = await usersRef.doc(ser.user.uid).get();
+                                    currentUser = Users.fromDocument(doc);
 
                                     Navigator.pushAndRemoveUntil(
                                         context,

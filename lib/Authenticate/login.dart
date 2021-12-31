@@ -315,9 +315,10 @@ if(currentUser.id != null) {
                                     .doc(User.user.uid)
                                     .get()
                                     .then((DocumentSnapshot result)
-                                {
+                                async {
                                   loging =  false;
-
+                                  DocumentSnapshot doc = await usersRef.doc(User.user.uid).get();
+                                  currentUser = Users.fromDocument(doc);
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
