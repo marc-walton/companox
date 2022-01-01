@@ -55,12 +55,13 @@ class _FaShowState extends State<FaShow> {
           user= users.uid,
           photo= users.photoURL,
 
-          setState(() async {
+          setState(()  {
             isAuth = true;
 
           }),
            doc = await usersRef.doc(users.uid).get(),
           currentUser = Users.fromDocument(doc),
+          print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${currentUser.answered}"),
         }
     });
   }
@@ -72,7 +73,7 @@ class _FaShowState extends State<FaShow> {
         debugShowCheckedModeBanner: false,
         home:
         AnimatedSplashScreen(
-            duration: 2000,
+            duration: 3000,
             splash:
 Container(height:900,width:900,child: Image.asset('assests/img/COMPANOX.png',height:900,width:900,fit: BoxFit.fitHeight,)),
             nextScreen: Homepage(userid: user,photo: photo,auth: isAuth,),

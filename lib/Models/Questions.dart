@@ -1,9 +1,13 @@
 import 'package:alert_dialog/alert_dialog.dart';
 import 'package:companox/Homepage.dart';
+import 'package:companox/Models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Questions extends StatefulWidget {
 
   @override
@@ -18,7 +22,7 @@ class _QuestionsState extends State<Questions> {
   TextEditingController Age =  TextEditingController();
   List<String> selectedOption = <String>[];
 int value;
-
+  DocumentSnapshot doc;
   intro(){
     return
     Scaffold(
@@ -652,7 +656,10 @@ GFRadioListTile(titleText: "NOT AT ALL",
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Experienced numbness?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Experienced numbness?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 GFRadioListTile(titleText: "NOT AT ALL",
                   value: 0,
@@ -736,7 +743,10 @@ GFRadioListTile(titleText: "NOT AT ALL",
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Experienced dryness of mouth?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Experienced dryness of mouth?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 GFRadioListTile(titleText: "NOT AT ALL",
                   value: 0,
@@ -820,7 +830,10 @@ GFRadioListTile(titleText: "NOT AT ALL",
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Felt like there is nothing to look forward to?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Felt like there is nothing to look forward to?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -905,7 +918,10 @@ question11(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Felt down hearted or blue?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Felt down hearted or blue?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 GFRadioListTile(titleText: "NOT AT ALL",
                   value: 0,
@@ -989,7 +1005,10 @@ question12(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Felt close to panic?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Felt close to panic?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1076,7 +1095,10 @@ question13(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Unable to be enthusiastic about things?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Unable to be enthusiastic about things?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1132,53 +1154,46 @@ GFRadioListTile(titleText: "NOT AT ALL",
   }
   midPage_Page14(){
     return
-      SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height:8),
-            Text("TAKE A DEEP BREATHE AND EXHALE"),
-            SizedBox(height:8),
+      Scaffold(
+        appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
 
+              pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
 
+            },),
 
-            Row(
-              children: [
-                InkWell(
-                  onTap: () =>
-                  {
-                    usersRef.doc(currentUser.id).update({
-                      "next":15,
-                    }),
-                    pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
+            actions:[
+              ElevatedButton(style:ElevatedButton.styleFrom(
+                  primary:Colors.green.shade700), child:Text("Next"),onPressed: (){
+                usersRef.doc(currentUser.id).update({
+                  "next":15,
+                });
+                selectedOption = <String>[];
+                pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+              },),
+            ]),
+        body: Container(
+          color: Colors.white,
 
-                  },
-                  child: FittedBox(
-                    fit:  BoxFit.fitHeight,
-                    child: Container(
-                      alignment:Alignment.center,
-                      height:MediaQuery. of(context). size. height *0.06,
+          child: ListView(
 
-                      width:MediaQuery. of(context). size. width *0.5,
+            children: <Widget>[
+              SizedBox(height:MediaQuery.of(context).size.height/4),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("TAKE A DEEP BREATHE AND EXHALE",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
+              ),
+              SizedBox(height:MediaQuery.of(context).size.height/2),
 
-                      //icon: Icon(Icons.drag_handle),
-                      child:Text("Continue",style:TextStyle(color: Colors.black)),
-
-                    ),
-                  ),
-                ),
-
-
-              ],
-            ),
-
-
-
-
-          ],
+            ],
+          ),
         ),
       );
 
   }
+
 
   question14(){
 
@@ -1213,7 +1228,10 @@ GFRadioListTile(titleText: "NOT AT ALL",
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Little interest or pleasure in doing things?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Little interest or pleasure in doing things?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1300,7 +1318,10 @@ question15(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Feeling down depressed or hopeless?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Feeling down depressed or hopeless?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1387,7 +1408,10 @@ question16(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Trouble falling or staying asleep, or sleeping too much?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Trouble falling or staying asleep, or sleeping too much?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1474,7 +1498,10 @@ question17(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Feeling tired or having little energy?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Feeling tired or having little energy?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1561,7 +1588,10 @@ question18(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Poor appetite or overeating?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Poor appetite or overeating?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1648,7 +1678,10 @@ question19(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Trouble concentrating on things, such as reading the newspaper or watching television?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Trouble concentrating on things, such as reading the newspaper or watching television?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1735,7 +1768,10 @@ question20(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1822,7 +1858,10 @@ question21(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Thought that you would be better off dead, or by hurting yourself?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Thought that you would be better off dead, or by hurting yourself?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1909,7 +1948,10 @@ question22(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Feeling anxious, nervous or on edge?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Feeling anxious, nervous or on edge?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -1996,7 +2038,10 @@ question23(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Not being able to stop or control worrying?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Not being able to stop or control worrying?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -2082,7 +2127,10 @@ question24(){
       body: ListView(
         children: <Widget>[
           SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Trouble relaxing?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Trouble relaxing?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -2169,7 +2217,10 @@ question25(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Being so restless that it’s hard to sit still?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Being so restless that it’s hard to sit still?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -2256,7 +2307,10 @@ question26(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Becoming easily annoyed or irritable?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Becoming easily annoyed or irritable?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -2343,7 +2397,10 @@ question27(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Feeling afraid as if something awful might happen?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Feeling afraid as if something awful might happen?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
 GFRadioListTile(titleText: "NOT AT ALL",
@@ -2415,22 +2472,29 @@ question28(){
               ElevatedButton(style:ElevatedButton.styleFrom(
                 primary:Colors.green.shade700, // b
               ),
-                child:Text("Next"),onPressed: ()=>
+                child:Text("Next"),onPressed: () async =>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
                     msg: "Please select an option", timeInSecForIos: 4,gravity: ToastGravity.TOP):{
                   usersRef.doc(currentUser.id).update({
                     "28":value,
                     "next":30,
+                    "Q28":value == 0?false:true,
                   }),
                   selectedOption = <String>[],
-                  value = null,
+                  value == 0?pageController.animateToPage(35, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut):
                   pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
+                  value = null,
+                   doc = await usersRef.doc(currentUser.id).get(),
+                  currentUser = Users.fromDocument(doc),
                 },),
             ]),
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("If you have experienced any horrible, frightening or traumatic kind of event, kindly select 'YES'. If not, select No.?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("If you have experienced any horrible, frightening or traumatic kind of event, kindly select 'YES'. If not, select No.?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
             GFRadioListTile(titleText: "YES",
               value: 1,
@@ -2467,19 +2531,19 @@ question29(){
 
     return
       Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
 
         appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: Colors.white,
-            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
+            backgroundColor: Colors.blue,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
 
               pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
 
             },),
             actions:[
               ElevatedButton(style:ElevatedButton.styleFrom(
-                primary:Colors.green.shade700, // b
+                primary:Colors.blue, // b
               ),
                 child:Text("Next"),onPressed: ()=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
@@ -2496,10 +2560,15 @@ question29(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("IN THE PAST MONTH HAVE YOU,\nHad nightmares about the event(s) or thought about the event(s) when you did not want to?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("IN THE PAST MONTH HAVE YOU,\nHad nightmares about the event(s) or thought about the event(s) when you did not want to?",
+                    style:TextStyle(fontSize: MediaQuery.of(context).size.width/14,color: Colors.white)),
+              ),
 SizedBox(height:8),
 
    GFRadioListTile(titleText: "YES",
+                color: Colors.white,
                 value: 1,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2511,6 +2580,8 @@ SizedBox(height:8),
 
               ),
               GFRadioListTile(titleText: "NO",
+                color: Colors.white,
+
                 value: 0,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2531,19 +2602,19 @@ question30(){
 
     return
       Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
 
         appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: Colors.white,
-            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
+            backgroundColor: Colors.blue,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
 
               pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
 
             },),
             actions:[
               ElevatedButton(style:ElevatedButton.styleFrom(
-                primary:Colors.green.shade700, // b
+                primary:Colors.blue, // b
               ),
                 child:Text("Next"),onPressed: ()=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
@@ -2560,10 +2631,15 @@ question30(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Tried hard not to think about the event(s) or went out of your way to avoid situations that reminded you of the event(s)?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Tried hard not to think about the event(s) or went out of your way to avoid situations that reminded you of the event(s)?"
+                    ,style:TextStyle(fontSize: MediaQuery.of(context).size.width/14,color:Colors.white)),
+              ),
 SizedBox(height:8),
 
    GFRadioListTile(titleText: "YES",
+     color:Colors.white,
                 value: 1,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2575,6 +2651,7 @@ SizedBox(height:8),
 
               ),
               GFRadioListTile(titleText: "NO",
+                color:Colors.white,
                 value: 0,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2595,19 +2672,19 @@ question31(){
 
     return
       Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
 
         appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: Colors.white,
-            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
+            backgroundColor: Colors.blue,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
 
               pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
 
             },),
             actions:[
               ElevatedButton(style:ElevatedButton.styleFrom(
-                primary:Colors.green.shade700, // b
+                primary:Colors.blue, // b
               ),
                 child:Text("Next"),onPressed: ()=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
@@ -2624,10 +2701,14 @@ question31(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Been constantly on guard, watchful, or easily startled?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Been constantly on guard, watchful, or easily startled?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14,color:Colors.white)),
+              ),
 SizedBox(height:8),
 
    GFRadioListTile(titleText: "YES",
+     color:Colors.white,
                 value: 1,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2639,6 +2720,7 @@ SizedBox(height:8),
 
               ),
               GFRadioListTile(titleText: "NO",
+                color:Colors.white,
                 value: 0,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2659,19 +2741,19 @@ question32(){
 
     return
       Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
 
         appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: Colors.white,
-            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
+            backgroundColor: Colors.blue,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
 
               pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
 
             },),
             actions:[
               ElevatedButton(style:ElevatedButton.styleFrom(
-                primary:Colors.green.shade700, // b
+                primary:Colors.blue, // b
               ),
                 child:Text("Next"),onPressed: ()=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
@@ -2688,10 +2770,14 @@ question32(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Felt numb or detached from people, activities, or your surroundings?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Felt numb or detached from people, activities, or your surroundings?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14,color:Colors.white)),
+              ),
 SizedBox(height:8),
 
    GFRadioListTile(titleText: "YES",
+     color:Colors.white,
                 value: 1,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2703,6 +2789,7 @@ SizedBox(height:8),
 
               ),
               GFRadioListTile(titleText: "NO",
+                color:Colors.white,
                 value: 0,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2723,19 +2810,19 @@ question33(){
 
     return
       Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
 
         appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: Colors.white,
-            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
+            backgroundColor: Colors.blue,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){
 
               pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
 
             },),
             actions:[
               ElevatedButton(style:ElevatedButton.styleFrom(
-                primary:Colors.green.shade700, // b
+                primary:Colors.blue, // b
               ),
                 child:Text("Next"),onPressed: ()=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
@@ -2752,10 +2839,15 @@ question33(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused?"
+                    ,style:TextStyle(fontSize: MediaQuery.of(context).size.width/14,color:Colors.white)),
+              ),
 SizedBox(height:8),
 
    GFRadioListTile(titleText: "YES",
+     color:Colors.white,
                 value: 1,
                 groupValue: value,
                 onChanged:(val){setState(() {
@@ -2768,6 +2860,7 @@ SizedBox(height:8),
               ),
               GFRadioListTile(titleText: "NO",
                 value: 0,
+                color:Colors.white,
                 groupValue: value,
                 onChanged:(val){setState(() {
                   value = val;
@@ -2785,50 +2878,45 @@ SizedBox(height:8),
   }
   midPage_Page35(){
     return
-      SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height:8),
-            Text("YOU ARE ALMOST THERE PLEASE CONTINUE ANSWERING A FEW MORE QUESTIONS"),
-            SizedBox(height:8),
+      Scaffold(
+        appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
+              print("<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>${currentUser.Ques28}");
 
+              currentUser.Ques28?
+              pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut):
+             pageController.animateToPage(29, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+              print(">>????????????${currentUser.Ques28}");
 
+            },),
 
-            
-            Row(
-              children: [
-                InkWell(
-                  onTap: () =>
-                  {
-                    usersRef.doc(currentUser.id).update({
-                      "next":36,
-                    }),
-                    pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
+            actions:[
+              ElevatedButton(style:ElevatedButton.styleFrom(
+                  primary:Colors.green.shade700), child:Text("Next"),onPressed: (){
+                usersRef.doc(currentUser.id).update({
+                  "next":36,
+                });
+                selectedOption = <String>[];
+                pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+              },),
+            ]),
+        body: Container(
+          color: Colors.white,
 
-                  },
-                  child: FittedBox(
-                    fit:  BoxFit.fitHeight,
-                    child: Container(
-                      alignment:Alignment.center,
-                      height:MediaQuery. of(context). size. height *0.06,
+          child: ListView(
 
-                      width:MediaQuery. of(context). size. width *0.5,
+            children: <Widget>[
+              SizedBox(height:MediaQuery.of(context).size.height/4),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("YOU ARE ALMOST THERE PLEASE CONTINUE ANSWERING A FEW MORE QUESTIONS",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
+              ),
+              SizedBox(height:MediaQuery.of(context).size.height/2),
 
-                      //icon: Icon(Icons.drag_handle),
-                      child:Text("Continue",style:TextStyle(color: Colors.black)),
-
-                    ),
-                  ),
-                ),
-
-
-              ],
-            ),
-
-
-
-
-          ],
+            ],
+          ),
         ),
       );
 
@@ -2867,7 +2955,10 @@ SizedBox(height:8),
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you unsure where to go to seek professional care?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you unsure where to go to seek professional care?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
             GFRadioListTile(titleText: "NOT AT ALL",
@@ -2954,7 +3045,10 @@ question35(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Do you want to solve the problem on your own?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Do you want to solve the problem on your own?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
               GFRadioListTile(titleText: "NOT AT ALL",
                 value: 0,
@@ -3042,7 +3136,10 @@ question36(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Do you feel that you will get better by yourself without doing anything?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Do you feel that you will get better by yourself without doing anything?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3129,7 +3226,10 @@ question37(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you concerned that you might be seen as weak for having a mental issue?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you concerned that you might be seen as weak for having a mental issue?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3216,7 +3316,10 @@ question38(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you concerned that your issue might harm your chances of getting a job?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you concerned that your issue might harm your chances of getting a job?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3303,7 +3406,10 @@ question39(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you concerned what your family might think, say or feel?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you concerned what your family might think, say or feel?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3390,7 +3496,10 @@ question40(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you afraid you will not be able to afford the financial costs?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you afraid you will not be able to afford the financial costs?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3477,7 +3586,10 @@ question41(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you afraid you will be seen as crazy for seeking medical attention?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you afraid you will be seen as crazy for seeking medical attention?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3564,7 +3676,10 @@ question42(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Do you dislike talking about your feelings, emotions or thoughts?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Do you dislike talking about your feelings, emotions or thoughts?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3651,7 +3766,10 @@ question43(){
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Are you concerned people might not take you seriously if they found out you are seeking professional help?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Are you concerned people might not take you seriously if they found out you are seeking professional help?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
               GFRadioListTile(titleText: "NOT AT ALL",
@@ -3723,22 +3841,32 @@ question44(){
               ElevatedButton(style:ElevatedButton.styleFrom(
                 primary:Colors.green.shade700, // b
               ),
-                child:Text("Next"),onPressed: ()=>
+                child:Text("Next"),onPressed: ()async=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
                     msg: "Please select an option", timeInSecForIos: 4,gravity: ToastGravity.TOP):{
                   usersRef.doc(currentUser.id).update({
                     "44":value,
                     "answered":true,
+                    "next":46,
+
                   }),
                   selectedOption = <String>[],
                   value = null,
-                  pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
+                  doc = await usersRef.doc(currentUser.id).get(),
+                  currentUser = Users.fromDocument(doc),
+                Get.offAll(()=>Homepage(
+                  userid:currentUser.id,
+                  auth: true,
+                )),
                 },),
             ]),
         body: ListView(
           children: <Widget>[
             SizedBox(height:MediaQuery.of(context).size.height/12),
-              Text("Do you feel that mental health problems are all just a modern day made up issue?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Do you feel that mental health problems are all just a modern day made up issue?",style:TextStyle(fontSize: MediaQuery.of(context).size.width/14)),
+              ),
 SizedBox(height:8),
 
             GFRadioListTile(titleText: "NOT AT ALL",
@@ -3916,13 +4044,13 @@ SizedBox(height:8),
          Container(
             child: question33(),
           ),
-         Container(
-            child: question34(),
-          ),
-           Container(
+          Container(
             child: midPage_Page35(),
           ),
 
+          Container(
+            child: question34(),
+          ),
          Container(
             child: question35(),
           ),
