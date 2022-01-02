@@ -240,9 +240,12 @@ if(currentUser.id != null) {
     return  ModalProgressHUD(
       inAsyncCall: loging,
       child: Scaffold(
+        backgroundColor:Colors.white ,
           appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: Text("Login", style: TextStyle(color:Colors.white),),
+            automaticallyImplyLeading: false,
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            title: Text("Login", style: TextStyle(color:Colors.black),),
           ),
           body: Container(
 
@@ -252,6 +255,8 @@ if(currentUser.id != null) {
                     key: _loginFormKey,
                     child: Column(
                       children: <Widget>[
+                        Image.asset("assests/img/COMPANOX.png",  height: MediaQuery.of(context).size.height/4.5,
+                          width: double.infinity,),
                         TextFormField(
                           style: TextStyle(color:Colors.black),
                           decoration: InputDecoration(

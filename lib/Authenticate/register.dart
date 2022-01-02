@@ -5,8 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:getwidget/colors/gf_color.dart';
-import 'package:getwidget/components/toast/gf_toast.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -173,10 +172,11 @@ class _RegisterPageState extends State<RegisterPage> {
     return ModalProgressHUD(
         inAsyncCall: loging,
         child:Scaffold(
-
+            backgroundColor:Colors.white ,
             appBar: AppBar(
-              backgroundColor: Colors.black,
-              title: Text("Register", style: TextStyle(color:Colors.white),),
+              elevation: 0.0,
+              backgroundColor: Colors.white,
+              title: Text("Register", style: TextStyle(color:Colors.black),),
             ),
             body: Container(
                          padding: const EdgeInsets.all(20.0),
@@ -294,7 +294,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         .doc(ser.user.uid)
                                         .set({
                                       "id": ser.user.uid,
-                                      "username" : firstNameInputController.text,
                                       "photoUrl": "https://firebasestorage.googleapis.com/v0/b/companox.appspot.com/o/favicon-32x32.png?alt=media&token=ef959703-6079-4216-b28c-37403d1d6fc7",
                                       "email": emailInputController.text,
                                       "displayName": firstNameInputController.text,

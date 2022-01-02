@@ -1,6 +1,7 @@
 import 'package:alert_dialog/alert_dialog.dart';
 import 'package:companox/Homepage.dart';
 import 'package:companox/Models/user.dart';
+import 'package:companox/Screens/AssesmentScore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,8 @@ class _QuestionsState extends State<Questions> {
   List<String> selectedOption = <String>[];
 int value;
   DocumentSnapshot doc;
+  int assessment;
+  int q28Score;
   intro(){
     return
     Scaffold(
@@ -2894,12 +2897,14 @@ SizedBox(height:8),
 
             actions:[
               ElevatedButton(style:ElevatedButton.styleFrom(
-                  primary:Colors.green.shade700), child:Text("Next"),onPressed: (){
+                  primary:Colors.green.shade700), child:Text("Next"),onPressed: () async {
                 usersRef.doc(currentUser.id).update({
                   "next":36,
                 });
                 selectedOption = <String>[];
                 pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
+                  doc = await usersRef.doc(currentUser.id).get();
+                currentUser = Users.fromDocument(doc);
               },),
             ]),
         body: Container(
@@ -3844,20 +3849,29 @@ question44(){
                 child:Text("Next"),onPressed: ()async=>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
                     msg: "Please select an option", timeInSecForIos: 4,gravity: ToastGravity.TOP):{
+
+                  selectedOption = <String>[],
+                  value = null,
+                  q28Score =
+                     currentUser.Q28+currentUser.Q29+currentUser.Q30+
+                      currentUser.Q31+currentUser.Q32+currentUser.Q33,
+                  assessment = currentUser.Q2+currentUser.Q3+currentUser.Q4+currentUser.Q5+currentUser.Q6+currentUser.Q7+currentUser.Q8+
+                      currentUser.Q9+currentUser.Q10+currentUser.Q11+currentUser.Q12+currentUser.Q13+currentUser.Q14+currentUser.Q15+
+                      currentUser.Q16+currentUser.Q17+currentUser.Q18+currentUser.Q19+currentUser.Q20+currentUser.Q21+currentUser.Q22+
+                      currentUser.Q23+currentUser.Q24+currentUser.Q25+currentUser.Q26+currentUser.Q27+
+                      currentUser.Q34+currentUser.Q35+currentUser.Q36+currentUser.Q37+currentUser.Q38+
+                      currentUser.Q39+currentUser.Q40+currentUser.Q41+currentUser.Q42+currentUser.Q43+currentUser.Q44,
                   usersRef.doc(currentUser.id).update({
                     "44":value,
                     "answered":true,
-                    "next":46,
-
+                    "next":47,
+                   "totalPoints": assessment,
+                    "Ques28Points":q28Score,
                   }),
-                  selectedOption = <String>[],
-                  value = null,
-                  doc = await usersRef.doc(currentUser.id).get(),
-                  currentUser = Users.fromDocument(doc),
-                Get.offAll(()=>Homepage(
-                  userid:currentUser.id,
-                  auth: true,
-                )),
+                 doc = await usersRef.doc(currentUser.id).get(),
+                 currentUser = Users.fromDocument(doc),
+                  pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
+
                 },),
             ]),
         body: ListView(
@@ -4083,6 +4097,9 @@ SizedBox(height:8),
           ),
          Container(
             child: question44(),
+          ),
+ Container(
+            child: AssessmentScore(),
           ),
 
 

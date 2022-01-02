@@ -53,6 +53,7 @@ bool Ques28;
     int  Q43;
     int  Q44;
  int  totalPoints;
+ int  Ques28Points;
 
   Users({
     this.id,
@@ -108,6 +109,7 @@ this.Q42,
 this.Q43,
 this.Q44,
 this.totalPoints,
+this.Ques28Points,
 
 
   });
@@ -121,6 +123,8 @@ this.totalPoints,
       answered: doc.data()['answered'],
  next: doc.data()['next'],
       Ques28: doc.data()['Q28'],
+      Ques28Points: doc.data()['Ques28Points'],
+
       totalPoints: doc.data()['totalPoints'],
 
    age: doc.data()['age'],

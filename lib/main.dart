@@ -61,7 +61,6 @@ class _FaShowState extends State<FaShow> {
           }),
            doc = await usersRef.doc(users.uid).get(),
           currentUser = Users.fromDocument(doc),
-          print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${currentUser.answered}"),
         }
     });
   }
@@ -75,7 +74,7 @@ class _FaShowState extends State<FaShow> {
         AnimatedSplashScreen(
             duration: 3000,
             splash:
-Container(height:900,width:900,child: Image.asset('assests/img/COMPANOX.png',height:900,width:900,fit: BoxFit.fitHeight,)),
+ Image.asset('assests/img/appIcon.png'),
             nextScreen: Homepage(userid: user,photo: photo,auth: isAuth,),
             splashTransition: SplashTransition.fadeTransition,
             backgroundColor: Colors.black

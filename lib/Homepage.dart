@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:companox/Models/Questions.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:companox/Screens/Help.dart';
+import 'package:companox/Screens/Profile.dart';
+import 'package:companox/Screens/Task.dart';
 import 'package:companox/Authenticate/register.dart';
 import 'package:companox/Authenticate/login.dart';
-import 'package:bottom_bar/bottom_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,8 +14,8 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:companox/Models/user.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -93,22 +93,7 @@ class _HomepageState extends State<Homepage> with WidgetsBindingObserver {
     googleSignIn.signIn();
   }
 
-  logout() {
-    FirebaseAuth.instance.signOut();
-    googleSignIn.signOut();
-  }
-//       Container(
-// child:ElevatedButton(child: Text("Logout"),onPressed: (){
-//   logout();
-//   Navigator.pushAndRemoveUntil(
-//       context,
-//       MaterialPageRoute(
-//           builder: (context) => Homepage(
-//             auth: false,
-//           )),
-//           (_) => false );
-  // Navigator.pushAndRemoveUntil(context, newRoute, (route) => false)
-// },),
+
   onPageChanged(int pageIndex) {
     setState(() {
       this.pageIndex = pageIndex;
@@ -122,71 +107,56 @@ class _HomepageState extends State<Homepage> with WidgetsBindingObserver {
       curve: Curves.easeInOut,
     );
   }
-
-
+  logout() {
+    FirebaseAuth.instance.signOut();
+    googleSignIn.signOut();
+    Get.offAll(()=>LoginPage());
+  }
+retakeTest() async {
+  usersRef.doc(currentUser.id).update({
+    "answered":false,
+    "next":1,
+    "Q28":false,
+  });
+ DocumentSnapshot doc = await usersRef.doc(currentUser.id).get();
+  currentUser = Users.fromDocument(doc);
+}
   buildAuthScreen() {
 
     return SafeArea(
       child: Scaffold(
-        key: _scaffoldKey,
-drawer: Drawer(),
-        body:
-         currentUser.answered?Container() :Container(child: Questions())
+endDrawer: Drawer(child:  Container(
+  child: Column(children: [
+    ListTile(trailing:GestureDetector(onTap:()=>Navigator.pop(context),child: Icon(Icons.close_outlined)) ,),
+    InkWell(child: ListTile(title: Text("Get professional help",style:TextStyle(fontSize:MediaQuery.of(context).size.width/18, ))),onTap:()=> Get.to(()=>Help()),),
+    InkWell(child: ListTile(title: Text("Take another test",style:TextStyle(fontSize:MediaQuery.of(context).size.width/18,)),onTap: (){
+      retakeTest();
+      Navigator.pop(context);
+      setState(() { });
 
-        // bottomNavigationBar:
-        // BottomBar(
-        //   backgroundColor: Colors.black,
-        //   selectedIndex: pageIndex,
-        //   onTap: (int index) {
-        //     pageController.jumpToPage(index);
-        //     setState(() => pageIndex = index);
-        //   },
-        //   items: <BottomBarItem>[
-        //     BottomBarItem(
-        //       icon: Icon(Icons.weekend),
-        //       title: Text('Home',style: TextStyle(color: Colors.white),),
-        //       activeColor: Colors.white,
-        //       inactiveColor: Colors.grey,
-        //
-        //     ),
-        //     BottomBarItem(
-        //       icon:    Icon(Icons.store,),
-        //
-        //       title: Text('Shop',style: TextStyle(color: Colors.white),),
-        //       activeColor: Colors.white,
-        //       inactiveColor: Colors.grey,
-        //     ), BottomBarItem(
-        //       icon: Icon(FontAwesomeIcons.swatchbook),
-        //       title: Text('Freelancers',style: TextStyle(color: Colors.white),),
-        //       activeColor: Colors.white,
-        //       inactiveColor: Colors.grey,
-        //     ),
-        //     BottomBarItem(
-        //       icon:Icon(Icons.play_arrow),
-        //       title: Text('FashureTV',style: TextStyle(color: Colors.white),),
-        //       activeColor: Colors.white,
-        //       inactiveColor: Colors.grey,
-        //     ),
-        //     BottomBarItem(
-        //       icon:      FittedBox(
-        //         child: Row(
-        //           children: [
-        //
-        //             currentUser == null?  Container(
-        //
-        //             ):badgescount(),
-        //             Icon(Icons.inbox,),
-        //           ],
-        //         ),
-        //       ),
-        //
-        //       title: Text('Settings',style: TextStyle(color: Colors.white),),
-        //       activeColor: Colors.white,
-        //       inactiveColor: Colors.grey,
-        //
-        //     ),
-        //   ],
-        // ),
+    },),),
+    InkWell(child: ListTile(title: Text("My profile",style:TextStyle(fontSize:MediaQuery.of(context).size.width/18,)),onTap:()=> Get.to(()=>Profile()),)),
+    InkWell(child: ListTile(title: Text("Logout",style:TextStyle(fontSize:MediaQuery.of(context).size.width/18,)),onTap:()=> logout(),)),
+
+  ],),
+),),
+appBar: AppBar(elevation: 0.0,
+    backgroundColor: Colors.white,
+iconTheme: IconThemeData(color: Colors.black) ,
+title: Row(
+  children: [
+        Text("Tasks",style: TextStyle(fontSize: MediaQuery.of(context).size.height/15,color: Colors.black,
+            shadows:[
+            Shadow(  offset:Offset(1.0,2.0),
+              blurRadius: 3.0,
+              color: Colors.black26
+            )
+            ] ),),
+  ],
+),),
+        body:
+         currentUser.answered? Container(color:Colors.grey.shade200,child: Tasks()) :Container(child: Questions())
+
 
 
       ),
@@ -198,86 +168,15 @@ drawer: Drawer(),
   }
 
   Scaffold  buildUnAuthScreen(parentContext) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
 
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
 
-        // decoration: BoxDecoration(
-        //
-        //     gradient: fabGradient
-        // ) ,
-        // alignment: Alignment.center,
         child:
-        CurvedSplashScreen(
-          bottomSheetColor: Colors.black,
-          backText:"",
-          skipText: "",
-          screensLength: splashContent.length,
-          screenBuilder: (index) {
-            return SplashContent(
-              title: splashContent[index]["title"],
-              image: splashContent[index]["image"],
-              text: splashContent[index]["text"],
-            );
-          },
-        ),),
-
-
-      bottomNavigationBar: Container(
-        color: Colors.black,
-
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            color: Colors.black,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-              children: [Container(
-                width:150.0,
-                child: FloatingActionButton.extended(
-                  elevation: 10.0,
-
-                  heroTag:'in',
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-
-                  backgroundColor: Colors.black,
-                  onPressed: ()=>  Navigator.push(
-                    parentContext,
-                    MaterialPageRoute(
-                        builder: (context) => LoginPage(
-
-                        )),
-                  ),
-                  label: Text('Sign in',style:TextStyle(color: Colors.white) ,),
-                ),
-              ),
-
-                Container(
-                  width:150.0,
-
-                  child: FloatingActionButton.extended(
-                    elevation: 10.0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                    heroTag:'up',
-                    backgroundColor: Colors.black,
-                    onPressed: ()=>Navigator.push(
-                      parentContext,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterPage(
-
-                          )),
-                    ),
-                    label: Text('Sign up',style:TextStyle(color: Colors.white) ,),
-                  ),
-                ),],
-            ),
-          ),
-        ),
-      ),
+        LoginPage(),
+       ),
     );
 
 
