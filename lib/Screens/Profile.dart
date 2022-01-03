@@ -13,11 +13,7 @@ class _ProfileState extends State<Profile> {
       return
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text("You project severe signs of Anxiety & Depression",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
-            ],
-          ),
+          child: Text("You project severe signs of Anxiety & Depression",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),
         );
 
     }
@@ -25,11 +21,7 @@ class _ProfileState extends State<Profile> {
       return
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text("You project signs of Anxiety & Depression ",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
-            ],
-          ),
+          child: Text("You project signs of Anxiety & Depression ",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),
         );
 
     }
@@ -37,11 +29,7 @@ class _ProfileState extends State<Profile> {
       return
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text("You project mild sign of Depression",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
-            ],
-          ),
+          child: Text("You project mild sign of Depression",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),
         );
 
     }
@@ -49,11 +37,7 @@ class _ProfileState extends State<Profile> {
       return
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Text("You seem to be mentally fit!",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
-            ],
-          ),
+          child: Text("You seem to be mentally fit!",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),
         );
 
     }
@@ -66,8 +50,8 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text("And",style:TextStyle(fontSize: MediaQuery.of(context).size.height/18)),
-              Text("PTSD positive",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
+              Text("And",style:TextStyle(fontSize: MediaQuery.of(context).size.width/8,color: Colors.green)),
+              Text("PTSD positive",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),
 
             ],
           ),
@@ -80,8 +64,8 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text("And",style:TextStyle(fontSize: MediaQuery.of(context).size.height/18)),
-              Text("shows some sign of PTSD",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),
+              Text("And",style:TextStyle(fontSize: MediaQuery.of(context).size.width/8,color: Colors.green)),
+              Text("shows some sign of PTSD",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),
             ],
           ),
         );
@@ -93,8 +77,8 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text("And",style:TextStyle(fontSize: MediaQuery.of(context).size.height/18)),
-              Text("PTSD negative",style:TextStyle(fontSize: MediaQuery.of(context).size.height/16)),          ],
+              Text("And",style:TextStyle(fontSize: MediaQuery.of(context).size.width/8,color: Colors.green)),
+              Text("PTSD negative",style:TextStyle(fontSize:MediaQuery.of(context).size.width/10)),          ],
           ),
         );
 
@@ -127,12 +111,18 @@ class _ProfileState extends State<Profile> {
 
       body: SingleChildScrollView(child:
       Column(children: [
+
         ListTile(leading: CircleAvatar(backgroundImage: CachedNetworkImageProvider(currentUser.photoUrl),),
         title: Text(currentUser.displayName),
 
         ),
-        Text("Your Assessment",style:TextStyle(fontSize: MediaQuery.of(context).size.height/18)),
-        SizedBox(height:10),
+        SizedBox(height:20.0),
+        Row(
+          children: [
+            Text("Your Assessment",style:TextStyle(fontSize: MediaQuery.of(context).size.width/15)),
+          ],
+        ),
+        SizedBox(height:30),
         assessmentScore(),
         currentUser.Ques28?q28Score():Container(),
       ],)),

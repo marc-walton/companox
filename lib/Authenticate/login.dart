@@ -142,8 +142,9 @@ loging = true;
         "42":10,
         "43":10,
         "44":10,
-        "Q28-32":false,
+        "Q28":false,
         "totalPoints":0,
+"Ques28Points":0,
 
       });
 

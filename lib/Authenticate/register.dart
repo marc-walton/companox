@@ -20,26 +20,16 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
-  TextEditingController firstNameInputController;
-  TextEditingController lastNameInputController;
-  TextEditingController emailInputController;
-  TextEditingController pwdInputController;
-  TextEditingController confirmPwdInputController;
+  TextEditingController firstNameInputController  = new TextEditingController();
+  TextEditingController emailInputController  = new TextEditingController();
+  TextEditingController pwdInputController  = new TextEditingController();
+  TextEditingController confirmPwdInputController  = new TextEditingController();
   bool loging =false;
    bool _passwordVisible = false;
 
   final DateTime timestamp = DateTime.now();
- 
-  @override
-  initState() {
 
-    firstNameInputController = new TextEditingController();
-    lastNameInputController = new TextEditingController();
-    emailInputController = new TextEditingController();
-    pwdInputController = new TextEditingController();
-    confirmPwdInputController = new TextEditingController();
-    super.initState();
-  }
+
   Future<User> signInWithGoogle() async {
     loging =  true;
 
@@ -84,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "displayName": user.displayName,
         "next": 0,
         "answered":false,
-        "Q28-32":false,
+        "Q28":false,
         "age":0,
         "2":10,
         "3":10,
@@ -130,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "43":10,
         "44":10,
         "totalPoints":0,
-
+        "Ques28Points":0
       });
       doc = await usersRef.doc(user.uid).get();
     }
@@ -274,7 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             style: ElevatedButton.styleFrom(
                               elevation : 0.1,
 
-                              primary:  Colors.white.withOpacity(0.1), // background
+                              primary:  Colors.black, // background
                             ),
                             child: Text("Register",        style: TextStyle(color:Colors.white),),
                             onPressed: () {
@@ -299,7 +289,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       "displayName": firstNameInputController.text,
                                       "next": 0,
                                       "answered":false,
-                                      "Q28-32":false,
+                                      "Q28":false,
                                       "age":0,
                                       "2":10,
                                       "3":10,
@@ -345,7 +335,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       "43":10,
                                       "44":10,
                                       "totalPoints":0,
-
+"Ques28Points":0
                                     });
                                     DocumentSnapshot doc = await usersRef.doc(ser.user.uid).get();
                                     currentUser = Users.fromDocument(doc);

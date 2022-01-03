@@ -76,7 +76,7 @@ int value;
                 primary:Colors.green.shade700),child:Text("Next"),onPressed: (){
                 if(_formKey.currentState.validate()) {
                   usersRef.doc(currentUser.id).update({
-                    "age":Age,
+                    "age":int.tryParse(Age.text),
                     "next":2,
                   });
                   selectedOption = <String>[];
@@ -2478,14 +2478,15 @@ question28(){
                 child:Text("Next"),onPressed: () async =>
                 selectedOption.isEmpty?     Fluttertoast.showToast(
                     msg: "Please select an option", timeInSecForIos: 4,gravity: ToastGravity.TOP):{
+                  value == 0?pageController.animateToPage(35, duration: Duration(milliseconds: 001), curve: Curves.bounceInOut):
+                  pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 001), curve: Curves.bounceInOut),
                   usersRef.doc(currentUser.id).update({
                     "28":value,
                     "next":30,
                     "Q28":value == 0?false:true,
                   }),
                   selectedOption = <String>[],
-                  value == 0?pageController.animateToPage(35, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut):
-                  pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
+
                   value = null,
                    doc = await usersRef.doc(currentUser.id).get(),
                   currentUser = Users.fromDocument(doc),
@@ -2886,12 +2887,10 @@ SizedBox(height:8),
             elevation: 0.0,
             backgroundColor: Colors.white,
             leading:   IconButton(icon:Icon(Icons.arrow_back_ios,color: Colors.black,),onPressed: (){
-              print("<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>${currentUser.Ques28}");
 
               currentUser.Ques28?
-              pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut):
-             pageController.animateToPage(29, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut);
-              print(">>????????????${currentUser.Ques28}");
+              pageController.animateToPage(--pageChanged, duration: Duration(milliseconds: 001), curve: Curves.bounceInOut):
+             pageController.animateToPage(29, duration: Duration(milliseconds: 001), curve: Curves.bounceInOut);
 
             },),
 
@@ -3850,8 +3849,7 @@ question44(){
                 selectedOption.isEmpty?     Fluttertoast.showToast(
                     msg: "Please select an option", timeInSecForIos: 4,gravity: ToastGravity.TOP):{
 
-                  selectedOption = <String>[],
-                  value = null,
+
                   q28Score =
                      currentUser.Q28+currentUser.Q29+currentUser.Q30+
                       currentUser.Q31+currentUser.Q32+currentUser.Q33,
@@ -3860,7 +3858,7 @@ question44(){
                       currentUser.Q16+currentUser.Q17+currentUser.Q18+currentUser.Q19+currentUser.Q20+currentUser.Q21+currentUser.Q22+
                       currentUser.Q23+currentUser.Q24+currentUser.Q25+currentUser.Q26+currentUser.Q27+
                       currentUser.Q34+currentUser.Q35+currentUser.Q36+currentUser.Q37+currentUser.Q38+
-                      currentUser.Q39+currentUser.Q40+currentUser.Q41+currentUser.Q42+currentUser.Q43+currentUser.Q44,
+                      currentUser.Q39+currentUser.Q40+currentUser.Q41+currentUser.Q42+currentUser.Q43+value,
                   usersRef.doc(currentUser.id).update({
                     "44":value,
                     "answered":true,
@@ -3871,7 +3869,8 @@ question44(){
                  doc = await usersRef.doc(currentUser.id).get(),
                  currentUser = Users.fromDocument(doc),
                   pageController.animateToPage(++pageChanged, duration: Duration(milliseconds: 250), curve: Curves.bounceInOut),
-
+                  selectedOption = <String>[],
+                  value = null,
                 },),
             ]),
         body: ListView(
@@ -4099,7 +4098,7 @@ SizedBox(height:8),
             child: question44(),
           ),
  Container(
-            child: AssessmentScore(),
+   child: AssessmentScore(q28points: q28Score,totalPoints: assessment,),
           ),
 
 
