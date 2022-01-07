@@ -3947,6 +3947,7 @@ SizedBox(height:8),
         onPageChanged: (index) {
           setState(() {
             pageChanged = index;
+            WidgetsBinding.instance.focusManager.primaryFocus.unfocus();
           });
           print(pageChanged);
         },

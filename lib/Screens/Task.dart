@@ -29,7 +29,10 @@ class _TasksState extends State<Tasks> {
     return Scaffold(
       endDrawer: Drawer(child:  Container(
         child: Column(children: [
-          ListTile(trailing:GestureDetector(onTap:()=>Navigator.pop(context),child: Icon(Icons.close_outlined)) ,),
+          ListTile(
+            leading: CircleAvatar(child:Image.asset('assests/img/appIcon.png'),),
+            title: Text("Companox"),
+            trailing:GestureDetector(onTap:()=>Navigator.pop(context),child: Icon(Icons.close_outlined)) ,),
           InkWell(child: ListTile(title: Text("Get professional help",style:TextStyle(fontSize:MediaQuery.of(context).size.width/18, ))),onTap:()=> Get.to(()=>Help()),),
           InkWell(child: ListTile(title: Text("Take another test",style:TextStyle(fontSize:MediaQuery.of(context).size.width/18,)),onTap: () =>{
             retakeTest(),
@@ -63,7 +66,7 @@ class _TasksState extends State<Tasks> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Card(child: Container(
-                  height: MediaQuery.of(context).size.height/3,
+                  height: MediaQuery.of(context).size.height/2.5,
                     width: double.infinity,
                     child: Column(
                       children: [
@@ -74,6 +77,8 @@ class _TasksState extends State<Tasks> {
 
                         Image.asset("assests/img/sprinting.png",  height: MediaQuery.of(context).size.height/4.5,
                           width: double.infinity,),
+                        TextButton(child: Text("Turn on foot step tracker"),onPressed: (){},)
+
                       ],
                     ))
                   ,),
@@ -84,7 +89,7 @@ class _TasksState extends State<Tasks> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Card(child: Container(
-                  height: MediaQuery.of(context).size.height/3,
+                  height: MediaQuery.of(context).size.height/2.5,
                     width: double.infinity,
                     child: Column(
                       children: [
@@ -93,7 +98,8 @@ class _TasksState extends State<Tasks> {
                           child: Text("Do a breathing exercise",style:TextStyle(fontSize: MediaQuery.of(context).size.width/18)),
                         ),
                         Image.asset("assests/img/meditating.png",  height: MediaQuery.of(context).size.height/4.5,
-                          width: double.infinity,)
+                          width: double.infinity,),
+                        TextButton(child: Text("Exercise along with the app assistant"),onPressed: (){},),
 
                       ],
                     ))
@@ -105,7 +111,7 @@ class _TasksState extends State<Tasks> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Card(child: Container(
-                  height: MediaQuery.of(context).size.height/3,
+                  height: MediaQuery.of(context).size.height/2.5,
                     width: double.infinity,
                     child: Column(
                       children: [
@@ -115,6 +121,8 @@ class _TasksState extends State<Tasks> {
                         ),
                         Image.asset("assests/img/dancing.png",  height: MediaQuery.of(context).size.height/4.5,
                           width: double.infinity,),
+                        TextButton(child: Text("Listen to the playlist curated for you!"),onPressed: (){},),
+
                       ],
                     ))
                   ,),
@@ -125,7 +133,7 @@ class _TasksState extends State<Tasks> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Card(child: Container(
-                  height: MediaQuery.of(context).size.height/3,
+                  height: MediaQuery.of(context).size.height/2.5,
                     width: double.infinity,
                     child: Column(
                       children: [
@@ -135,6 +143,8 @@ class _TasksState extends State<Tasks> {
                         ),
                         Image.asset("assests/img/selfie.png",  height: MediaQuery.of(context).size.height/4.5,
                           width: double.infinity,),
+                        TextButton(child: Text("Meet people with similar condition as yours"),onPressed: (){},),
+
                       ],
                     ))
                   ,),
