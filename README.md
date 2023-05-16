@@ -1,5 +1,5 @@
 # companox
-
+A health  app  created for a client for android and ios
 Your companion
 
 ## Getting Started
